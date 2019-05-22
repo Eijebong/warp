@@ -495,7 +495,7 @@ impl WsBuilder {
 
                 let read = rx
                     .then(|result| Ok(result))
-                    .forward(rd_tx.sink_map_err(|_| ()))
+                    .forward(rd_tx.sink_map_err(|e| e))
                     .map(|_| ());
 
                 rt.block_on(write.join(read)).expect("websocket forward");
